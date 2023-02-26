@@ -17,19 +17,22 @@ namespace AsyncBreakfast
             Coffee cup = PourCoffee();
             Console.WriteLine("кофе готово");
 
-            Egg eggs = await FryEggsAsync(2);
-            Console.WriteLine("яйца готовы");
+            Task<Egg> eggsTask = FryEggsAsync(2);
+            Task<Bacon> baconTask = FryBaconAsync(3);
+            Task<Toast> toastTask = ToastBreadAsync(2);
 
-            Bacon bacon = await FryBaconAsync(3);
-            Console.WriteLine("бекон готов");
-
-            Toast toast = await ToastBreadAsync(2);
+            Toast toast = await toastTask;
             ApplyButter(toast);
             ApplyJam(toast);
             Console.WriteLine("тосты готовы");
-
             Juice oj = PourOJ();
             Console.WriteLine("апельсильновый сок готов");
+
+            Egg eggs = await eggsTask;
+            Console.WriteLine("яйца готовы");
+            Bacon bacon = await baconTask;
+            Console.WriteLine("бекон готов");
+
             Console.WriteLine("Завтрак готов!");
         }
 
