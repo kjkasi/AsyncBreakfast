@@ -19,21 +19,29 @@ namespace AsyncBreakfast
 
             Task<Egg> eggsTask = FryEggsAsync(2);
             Task<Bacon> baconTask = FryBaconAsync(3);
-            Task<Toast> toastTask = ToastBreadAsync(2);
+            var toastTask = MakeToastWithButterAndJamAsync(2);
 
-            Toast toast = await toastTask;
-            ApplyButter(toast);
-            ApplyJam(toast);
-            Console.WriteLine("тосты готовы");
-            Juice oj = PourOJ();
-            Console.WriteLine("апельсильновый сок готов");
-
-            Egg eggs = await eggsTask;
+            var eggs = await eggsTask;
             Console.WriteLine("яйца готовы");
-            Bacon bacon = await baconTask;
+
+            var bacon = await baconTask;
             Console.WriteLine("бекон готов");
 
+            var toast = await toastTask;
+            Console.WriteLine("тосты готовы");
+
+            Juice oj = PourOJ();
+            Console.WriteLine("апельсильновый сок готов");
             Console.WriteLine("Завтрак готов!");
+        }
+
+        static async Task<Toast> MakeToastWithButterAndJamAsync(int number)
+        {
+            var toast = await ToastBreadAsync(number);
+            ApplyButter(toast);
+            ApplyJam(toast);
+
+            return toast;
         }
 
         private static Juice PourOJ()
